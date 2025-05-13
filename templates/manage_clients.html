@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Management - Sneaker Admin</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f1e9e1;
+            margin: 0;
+            padding: 40px 20px;
+            color: #3a2c27;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4d3228;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .client-table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .client-table th {
+            background-color: #6b4c3b;
+            color: white;
+            padding: 12px 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .client-table td {
+            background-color: #ffffff;
+            color: #1f1f1f;
+            text-align: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #d4c1b3;
+        }
+
+        .client-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        select {
+            padding: 6px 10px;
+            font-size: 14px;
+            border: 2px solid #b19988;
+            background-color: #fdfaf8;
+            color: #3a2c27;
+            width: 100px;
+        }
+
+        button {
+            padding: 8px 14px;
+            background-color: #6b4c3b;
+            color: white;
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #5a3e30;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #6b4c3b;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #3f2b21;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Client Management</h2>
+
+    <table class="client-table">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+        {% for client in clients %}
+        <tr>
+            <form method="POST">
+                <td>{{ client.id }}</td>
+                <td>{{ client.username }}</td>
+                <td>{{ client.email }}</td>
+                <td>
+                    <select name="new_role">
+                        <option value="client" {% if client.role == 'client' %}selected{% endif %}>client</option>
+                        <option value="admin" {% if client.role == 'admin' %}selected{% endif %}>admin</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="hidden" name="client_id" value="{{ client.id }}">
+                    <button type="submit">Change</button>
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('home') }}" class="back-link">Back to Store</a>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        body {
+            background-color: #f1e9e1;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            color: #3a2c27;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4d3228;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #ffffff;
+            border: 2px solid #6b4c3b;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #b19988;
+            padding: 15px 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            font-size: 16px;
+        }
+
+        .item-actions form {
+            display: inline;
+        }
+
+        button {
+            padding: 8px 14px;
+            background-color: #6b4c3b;
+            color: white;
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #5a3e30;
+        }
+
+        .checkout {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 16px;
+            background-color: #6b4c3b;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            background-color: #5a3e30;
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+
+
+        .flash-container {
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    z-index: 1000;
+    width: auto;
+    max-width: 300px;
+    animation: fadeOut 1s ease-in-out 2s forwards; /* исчезновение */
+}
+
+.flash {
+    background-color: #6b4c3b;
+    color: #fff;
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    border: 2px solid #3f2b21;
+    font-size: 14px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+/* Дополнительные категории (если нужно) */
+.flash-success {
+    background-color: #4a944f;
+}
+.flash-danger {
+    background-color: #b54848;
+}
+.flash-info {
+    background-color: #8c6f47;
+}
+
+/* Исчезновение через 2s */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <h2>Your Cart</h2>
+    <div class="cart-container">
+        {% if cart_items %}
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <div class="item-info">
+                        <strong>{{ item.sneaker.name }}</strong>
+                        <span>Размер: {{ item.size }}</span>
+                        <span>Кол-во: {{ item.quantity }}</span>
+                    </div>
+                    <div class="item-actions">
+                        <form method="POST" action="{{ url_for('update_size', item_id=item.id) }}">
+                            <select name="new_size" required>
+                                <option disabled selected>Измени размер</option>
+                                {% for s in ['38','39','40','41','42','43','44'] %}
+                                    <option value="{{ s }}">{{ s }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Изменить</button>
+                        </form>
+
+                        <form method="POST" action="{{ url_for('remove_from_cart', item_id=item.id) }}">
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="checkout">
+                <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">
+                    🧾 Итоговая сумма: {{ total }} ₸
+                </p>
+                <form method="POST" action="{{ url_for('checkout') }}">
+                    <button type="submit">Купить</button>
+                </form>
+                
+            </div>
+            
+        {% else %}
+            <p style="text-align: center;">🛒 Корзина пуста</p>
+        {% endif %}
+        <a style="text-align: center;" href="{{ url_for('home') }}" class="back-link">⬅️ Назад в магазин</a>
+    </div>
+
+    
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>

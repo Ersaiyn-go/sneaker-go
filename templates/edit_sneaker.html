@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Sneaker</title>
+    <style>
+      body {
+        background-color: #f1e9e1;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .form-wrapper {
+        background-color: #ffffff;
+        padding: 30px 35px;
+        width: 480px;
+        border: 2px solid #6b4c3b;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        box-sizing: border-box;
+      }
+
+      h1 {
+        text-align: center;
+        color: #4d3228;
+        margin-bottom: 25px;
+        font-size: 22px;
+        text-transform: uppercase;
+      }
+
+      form label {
+        display: block;
+        margin-bottom: 6px;
+        color: #3a2c27;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      form input[type="text"],
+      form input[type="number"],
+      form input[type="file"],
+      form select,
+      form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #b19988;
+        font-size: 14px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        background-color: #fdfaf8;
+        color: #3a2c27;
+      }
+
+      form textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+
+      form input:focus,
+      form select:focus,
+      form textarea:focus {
+        border-color: #6b4c3b;
+        outline: none;
+      }
+
+      img {
+        display: block;
+        margin: 10px auto 20px;
+        border: 2px solid #ccc;
+      }
+
+      form button {
+        width: 100%;
+        padding: 12px;
+        background-color: #6b4c3b;
+        color: #fff;
+        border: none;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      form button:hover {
+        background-color: #5a3e30;
+      }
+
+      a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #6b4c3b;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      a:hover {
+        color: #3f2b21;
+        text-decoration: underline;
+      }
+
+      select {
+        appearance: none;
+        background-image: url("data:image/svg+xml;utf8,<svg fill='brown' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px 16px;
+      }
+    </style>
+</head>
+<body>
+<div class="form-wrapper">
+    <h1>Edit Sneaker</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ sneaker.name }}" required>
+
+        <label>Description:</label>
+        <textarea name="description" required>{{ sneaker.description }}</textarea>
+
+        <label>Price (₸):</label>
+        <input type="number" name="price" value="{{ sneaker.price }}" step="1" required>
+
+
+        <label>Upload New Image (optional):</label>
+        <input type="file" name="image_file" accept=".png,.jpg,.jpeg,.webp">
+
+        <label>Brand:</label>
+        <select name="brand" required>
+            <option value="Nike" {% if sneaker.brand == 'Nike' %}selected{% endif %}>Nike</option>
+            <option value="Adidas" {% if sneaker.brand == 'Adidas' %}selected{% endif %}>Adidas</option>
+            <option value="Puma" {% if sneaker.brand == 'Puma' %}selected{% endif %}>Puma</option>
+            <option value="New Balance" {% if sneaker.brand == 'New Balance' %}selected{% endif %}>New Balance</option>
+            <option value="Reebok" {% if sneaker.brand == 'Reebok' %}selected{% endif %}>Reebok</option>
+        </select>
+
+        <label>
+            <input type="checkbox" name="is_featured" {% if sneaker.is_featured %}checked{% endif %}>
+            Featured Sneaker
+        </label>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="{{ url_for('home') }}">⬅️ Back to Home</a>
+</div>
+</body>
+</html>

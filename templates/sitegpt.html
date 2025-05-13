@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sitegpt.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="wrapper">
+    <nav class="navbar">
+        <div class="logo"><a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='img/lastlogo.png') }}" alt="Logo"></a></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{{ url_for('add_sneaker') }}" class="button">Add Sneaker</a></li>
+            <li><a href="{{ url_for('login') }}" class="button">Login</a></li>
+            <li><a href="{{ url_for('manage_clients') }}" class="button">Manage Clients</a></li>
+            <li><a href="{{ url_for('cart') }}" class="button">🛒 Cart</a></li>
+            
+        </ul>
+    </nav>
+
+    <main>
+        <section id="new">
+            <div class="container">
+                <!-- <form method="GET" action="{{ url_for('home') }}" class="search">
+                    <select name="brand" class="select-filter" onchange="this.form.submit()">
+                        {% for brand in brands %}
+                            <option value="{{ brand }}" {% if selected_brand == brand %}selected{% endif %}>{{ brand }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="lupa"><i class="fa-solid fa-filter"></i></div>
+                </form> -->
+
+                <div class="sneaker-grid">
+                    {% for sneaker in sneakers %}
+                    <div class="sneaker">
+                        <div class="sneaker-info">
+                            <h3>{{ sneaker.name }}</h3>
+                            <p><strong>Brand:</strong> {{ sneaker.brand }}</p>
+                            {% if sneaker.is_featured %}
+                                <p style="color: green;"><strong>Featured!</strong></p>
+                            {% endif %}
+                            <p>{{ sneaker.description }}</p>
+                            <p class="price">Price: {{ sneaker.price }} ₸</p>
+
+                            <a href="{{ url_for('edit_sneaker', sneaker_id=sneaker.id) }}" class="button button-edit">Edit</a>
+                            <form action="{{ url_for('delete_sneaker', sneaker_id=sneaker.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="button button-danger" onclick="return confirm('Are you sure you want to delete?');">Delete</button>
+                            </form>
+                            <form method="POST" action="{{ url_for('add_to_cart', sneaker_id=sneaker.id) }}">
+                                <label for="size">Size:</label>
+                                <select name="size" required>
+                                    <option value=""> </option>
+                                    <option>38</option>
+                                    <option>39</option>
+                                    <option>40</option>
+                                    <option>41</option>
+                                    <option>42</option>
+                                    <option>43</option>
+                                    <option>44</option>
+                                </select>
+                                <button type="submit" class="button">Add to Cart</button>
+                            </form>
+                                                   
+                        </div>
+                        <img src="{{ url_for('static', filename=sneaker.image_url) }}" alt="{{ sneaker.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+<footer class="footer">
+    <p>&copy; 2025 Sneaker Store. All rights reserved.</p>
+    <div class="social-links">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+    </div>
+</footer>
+</body>
+</html>

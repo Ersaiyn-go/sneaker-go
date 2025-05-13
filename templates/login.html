@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Sneaker Store</title>
+    <style>
+        body {
+            background-color: #f1e9e1;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-wrapper {
+            background-color: #ffffff;
+            padding: 30px 35px;
+            width: 400px;
+            border: 2px solid #6b4c3b;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4d3228;
+            margin-bottom: 25px;
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #3a2c27;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #b19988;
+            font-size: 14px;
+            margin-bottom: 15px;
+            background-color: #fdfaf8;
+            color: #3a2c27;
+        }
+
+        input:focus {
+            border-color: #6b4c3b;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6b4c3b;
+            color: white;
+            border: none;
+            font-size: 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5a3e30;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            text-decoration: none;
+            color: #6b4c3b;
+            font-weight: 500;
+        }
+
+        .register-link a:hover {
+            color: #3f2b21;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="form-wrapper">
+    <h2>Login</h2>
+    <form method="POST" action="{{ url_for('login') }}">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Log In</button>
+    </form>
+
+    <div class="register-link">
+        <p>No account? <a href="{{ url_for('register') }}">Register here</a></p>
+    </div>
+</div>
+</body>
+</html>

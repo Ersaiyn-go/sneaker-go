@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>403 - Access Denied</title>
+    <style>
+        body {
+            background-color: #1e1e2f;
+            font-family: 'Segoe UI', sans-serif;
+            color: #f4f4f4;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        h1 {
+            font-size: 60px;
+            color: #ff4d4f;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #bd974a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #4f3b18;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 40px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>403</h1>
+    <p>🚫 Access Denied — You don’t have permission to view this page.</p>
+    <a href="{{ url_for('home') }}">Back to Store</a>
+</body>
+</html>
